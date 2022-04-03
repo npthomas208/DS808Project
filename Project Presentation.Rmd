@@ -1,0 +1,59 @@
+---
+title: "DS808 Optimization II - Project"
+subtitle: "A multi-objective model for optimizing the socio-economic performance of a pharmaceutical supply chain"
+author: "Nate Thomas"
+date: "4/03/2022"
+output: powerpoint_presentation
+font-size: 10pt
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+library(knitr)
+```
+
+## Overview   
+
+ - Triple Bottom Line (Profit, People, Planet) seeks to measure financial social and environmental impact.
+ 
+ - Main aspects:
+ 
+    - Uncertain Parameters
+    
+    - TBL objectives
+    
+    - Assessment of environment impacts using Eco-inducator 99
+ 
+
+## Motivation and research contributions
+
+ - Development of the SSCM under uncertainty (previous works provides deterministic approach)
+
+## Literature review 
+
+ - ...
+
+## Problem descriptions and modeling
+
+One-time-use medicated need and syringe CLSCM (clossed loop supply change management). This includes multi-echelon, and a single period (time increment)
+
+ - Objective functions:
+ 
+    - Objective 1: Minimization of costs
+    
+    - Objective 2: Maximization of customer services
+    
+    - Objective 3: Minimization of environmental impacts
+    
+## Constraints
+
+## Solution Methodology
+
+## Results And Discussion
+
+## Sensitivity Analysis
+
+## Conclusions
+
+## Reference
+
+[1]  Firoz Ahmad, Socio-Economic Planning Sciences, https://doi.org/10.1016/j.seps.2021.101126
