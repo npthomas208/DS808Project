@@ -13,7 +13,15 @@ library(knitr)
 
 ## Overview   
 
- - Triple Bottom Line (Profit, People, Planet) seeks to measure financial social and environmental impact.
+ - Full life cycle supply chain optimization of one-time-use medicated syringes.
+ 
+ - Highly constrained by regulatory requirements including disallowing recycling (even in sterilized form) any end-of-life (EOL) and end-of-use (EOU) materials.
+
+![](PSCM.PNG)
+
+## TBL
+
+ - Triple Bottom Line (TBL) (Profit, People, Planet) seeks to measure financial social and environmental impact.
  
  - Main aspects:
  
@@ -24,13 +32,16 @@ library(knitr)
     - Assessment of environment impacts using Eco-inducator 99
  
 
+## Uncertain Parameters - Fuzzy sets
+
+  - Fuzzy set theory to represent vague quantitative information. Permits values to belong to a set with its membership being prababilistic as opposed to absolute. 
+  
+  - Work uses triangular membership function. The most likely, optimistic, and pessimistic create the vertices of the triangle in probability distribution function of the parameters.
+
 ## Motivation and research contributions
 
  - Development of the SSCM under uncertainty (previous works provides deterministic approach)
 
-## Literature review 
-
- - ...
 
 ## Problem descriptions and modeling
 
@@ -44,9 +55,39 @@ One-time-use medicated need and syringe CLSCM (clossed loop supply change manage
     
     - Objective 3: Minimization of environmental impacts
     
+## Objective 1: (Profit) Minimization of costs
+
+ - Minimization of fixed price to operate each facility and transportation costs.
+
+![](O1.PNG)
+
+## Objective 2: (People) Maximization of customer servies
+
+	- The social benefit has been addressed by maximizing customer services in terms of customer demand coverage.
+
+  - This in effect will force the optimal objective function to larger distribution regions (even if not absolutely more cost effective).
+  
+  - The presumes a priori that maximal distribution is a good unto itself, which is not further discussed but taken as given within the reviewed work.
+  
+![](O2.PNG)
+
+## Objective 3: (Planet) Minimization of environmental imports
+
+   - Step A: Identify and describe (quantitatively) the PSCM network
+   
+   - Step B: Quantify most characteristic (most readily available) impacts within the constrains of time and resources within the review.
+   
+   - Step C: Use heuristics and guidance provided by Eco-indicator literature to sum the total impact 'points'
+   
+   - The Eco-Indicator value is an aggregate measure of human health, ecosystem quality, and resource depletion.  There is confounding affects here human well-being which are not isolated and optimized as part of Objective 2.
+   
+![](O3.PNG)
+
 ## Constraints
 
-## Solution Methodology
+![Demand must be met from somewhere \n Shipped quantity should match demand \n next line...](constraints1.PNG)
+
+## Solution Methodology   
 
 ## Results And Discussion
 
