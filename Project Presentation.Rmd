@@ -9,39 +9,81 @@ font-size: 10pt
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
 library(knitr)
+library(dplyr)
 ```
 
 ## Overview   
 
- - Full life cycle supply chain optimization of one-time-use medicated syringes.
+  - Full life cycle supply chain optimization of one-time-use medicated syringes.
  
- - Highly constrained by regulatory requirements including disallowing recycling (even in sterilized form) any end-of-life (EOL) and end-of-use (EOU) materials.
+  - Highly constrained by regulatory requirements including disallowing recycling (even in sterilized form) any end-of-life (EOL) and end-of-use (EOU) materials.
+  
+  - 459 variables, 42 binary, 417 linear
+  
+  - 530 constraints, 498 linear one-sided inequalities, 32 (approximate) equalities
 
 ![](PSCM.PNG)
 
 ## TBL
 
- - Triple Bottom Line (TBL) (Profit, People, Planet) seeks to measure financial social and environmental impact.
+  - Triple Bottom Line (TBL) (Profit, People, Planet) objective function ensemble seeks to measure financial social and environmental impact.
  
- - Main aspects:
- 
-    - Uncertain Parameters
-    
+  - Main contributions of the reviewed work:
+
     - TBL objectives
+ 
+    - Uncertain Parameters (fuzzy parameters with feasibility degree ($\beta$) modulation)
     
     - Assessment of environment impacts using Eco-inducator 99
  
 
 ## Uncertain Parameters - Fuzzy sets
 
-  - Fuzzy set theory to represent vague quantitative information. Permits values to belong to a set with its membership being prababilistic as opposed to absolute. 
+  - Fuzzy set theory to represent vague quantitative information. Permits values to belong to a set with its membership being a proportionality as opposed to absolute. 
   
-  - Work uses triangular membership function. The most likely, optimistic, and pessimistic create the vertices of the triangle in probability distribution function of the parameters.
+  - Work uses triangular membership function. Most likely, optimistic, and pessimistic create the vertices of the triangle in "fuzzy" parameter space.
 
-## Motivation and research contributions
+![](Fuzzy Triangles.png)
 
- - Development of the SSCM under uncertainty (previous works provides deterministic approach)
+## Motivation
 
+  - Previous literature focused on clear deterministic models without incorporation of vague uncertainty in constraint domains, making interpretation of results dubious.  
+
+  - Development of the SSCM under a framework to quantify and evaluate the various model solutions under uncertainty.
+
+## Decision Variabls
+
+$a,b,d,g,h$: index of suppliers, manufacturers, distribution centers, collection centers, disposal facilities
+
+$Y_i$: binary variable indicating open/closed status of locations
+
+$X_{ij}$ binary variable indicating use arc usage between locations
+
+$Z_[ij]$: Integer variable indicating amount of product shipped between locations
+
+![](DecisionVariables.PNG)
+
+## Constraint Quantity Notation
+
+$a$, $\tilde{a}$: index and capacity of suppliers
+
+$b$, $\tilde{b}_{s}$, $\tilde{b}_{f}$, $\tilde{b}_{e}$: index, capacity, fixed cost, and environmental impact of manufacturers 
+
+$d$, $\tilde{d}_{s}$, $\tilde{d}_{f}$, $\tilde{d}_{e}$: index, capacity, fixed cost, and environmental impact of distribution centers
+
+$c$, $\tilde{c}_{c}$: index and demand quantity of customers within a particular market region 
+
+$g$, $\tilde{g}_{s}$, $\tilde{g}_{f}$, $\tilde{g}_{e}$: index, capacity, fixed cost, and environmental impact of collection centers
+
+$h$, $\tilde{h}_{s}$, $\tilde{h}_{f}$, $\tilde{h}_{e}$: index, capacity, fixed cost, and environmental impact of disposal facilities
+
+$\tilde{DS}_{ij}$: distance between to locations
+
+$\tilde{TC}_{ij}$: per unit transport cost between locations
+
+$\tilde{EI}_{ij}$: per unit environmental impact between locations
+
+![](ConstraintQuantities.PNG)
 
 ## Problem descriptions and modeling
 
@@ -49,11 +91,11 @@ One-time-use medicated need and syringe CLSCM (clossed loop supply change manage
 
  - Objective functions:
  
-    - Objective 1: Minimization of costs
+    - Objective 1: (Profit) Minimization of costs
     
-    - Objective 2: Maximization of customer services
+    - Objective 2: (People) Maximization of customer services
     
-    - Objective 3: Minimization of environmental impacts
+    - Objective 3: (Planet) Minimization of environmental impacts
     
 ## Objective 1: (Profit) Minimization of costs
 
@@ -63,11 +105,11 @@ One-time-use medicated need and syringe CLSCM (clossed loop supply change manage
 
 ## Objective 2: (People) Maximization of customer servies
 
-	- The social benefit has been addressed by maximizing customer services in terms of customer demand coverage.
+  - The social benefit has been addressed by maximizing customer service through customer demand coverage.
 
-  - This in effect will force the optimal objective function to larger distribution regions (even if not absolutely more cost effective).
+  - This in effect will drive the aggregate optimal objective to larger distribution regions (even if not strictly more cost effective).
   
-  - The presumes a priori that maximal distribution is a good unto itself, which is not further discussed but taken as given within the reviewed work.
+  - This presumes a priori that maximal distribution is a good unto itself, which is not further discussed but taken as given within the reviewed work.
   
 ![](O2.PNG)
 
@@ -85,15 +127,75 @@ One-time-use medicated need and syringe CLSCM (clossed loop supply change manage
 
 ## Constraints
 
-![Demand must be met from somewhere \n Shipped quantity should match demand \n next line...](constraints1.PNG)
+- 3.4 Demand must be met from somewhere
 
-## Solution Methodology   
+- 3.5 Shipped amount should be approximately equal to demand
+
+- 3.6 Manufactured capacity should be greater than the amount shipped.
+
+- 3.7 Amount shipped from distribution centers should be less than capacity.
+
+- 3.8 Amount shipped to collection centers should be less than capacity.
+
+- 3.9 Amount shipped to disposal centers should be less than capacity.
+
+- 3.10 Amount shipped from manufacturer equals demand if arc is used
+
+- 3.11 Amount shipped from distribution equals demand if acr is used.
+
+- 3.12 A manufacturer can only ship if it is open.
+
+- 3.13 A distribution center can only ship if it is open.
+
+![](constraints1.PNG)
+
+## Solution Methodology and Feasibility Degree   
+
+  - Compromise solutions
+  
+  - Three methods are presented to combine the three objectives: (1) Zimmerman’s fuzzy technique; (2) γ-aggregation operator technique (3) Minimum bounded sum operator technique 
+  
+  - All attempt to assign combined objective function solutions into a single metric.
+  
+  - In effect shifts the mean between the upper and lower fuzzy bound estimate and therefore is a sliding scale risk tolerance control instrument
+  
+    - For example, under high risk averse precondition (high $\beta$), opening and operating fewer manufacturing and collection centers will always be preferred.
+  
+![](SolutionMethodology.PNG)
+  
+## Performance Analysis
+
+  - Techniques for Order Preference by Similarity to Ideal Solution (TOPSIS): the selected alternatives should have the shortest distance from the positive ideal solution, and farthest distance from the negative ideal solution.
+  
+  - In practice this allows for not only pursuing the greatest benefit but also avoiding risk as well.
+  
+  - It also allows for comparison of multiple solution methods based.
+
+![](SolutionTOPSISranking.PNG)
+
+## Opimization Stepwise Summary
+
+1. Define the network and prodposed multiobjective model, under uncertainty.
+
+2. Compute simple expected intervals for the fuzzy parameter set.
+
+3. Formulate the model and solve for best and worst case for each objective function.
+
+4. Construct reformulated model using the feasibility degree to weight skewness between upper and lower expected bounds of the fuzzy parameters, and determine absolutely minima/maxima of all objective functions (to used in TOPSIS later)
+
+5. Apply solution approaches to the ensemble of objectives.
+
+6. Modulate feasibility degree to get identify prospective compromise solutions.
+
+7. Perform TOPSIS on the ensemble of solution sets to maximize the aggregate benefit and also concurrently minimize risk of adverse impact.
 
 ## Results And Discussion
 
-## Sensitivity Analysis
-
-## Conclusions
+  - The company elected to use eight (8) manufacturing facilities and twelve (12) collection sites.  
+  
+  - "Interestingly, each methods γ-aggregation operator, Zimmermans’ fuzzy approach and Minimum sum bounded operator have been assigned with top three ranks at minimum feasibility degree β = 0.1 respectively." However, given the way that $\beta$ defined this will always be the case, as this is the most "loose"-ly constrained solution set.
+  
+  - The authors propose "fuzzy" parameters as a improvement on conventional stochastic techniques.
 
 ## Reference
 
